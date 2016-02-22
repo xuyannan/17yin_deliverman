@@ -1,0 +1,93 @@
+import Vue from 'vue'
+// import App from './App'
+import Login from './components/Login'
+import Orders from './components/Orders'
+import VueRouter from 'vue-router'
+import Resource from 'vue-resource'
+import cookie from './components/cookie'
+import MenuBar from './components/MenuBar'
+import SideBar from './components/SideBar'
+import Map from './components/Map'
+Vue.use(Resource)
+Vue.use(VueRouter)
+
+Vue.http.options.root = 'http://localhost:3000/api/v1/'
+
+/* eslint-disable no-new */
+
+var router = new VueRouter()
+
+router.map({
+  '/login': {
+    name: 'login',
+    component: Login,
+    title: '登录'
+  },
+  '/orders': {
+    name: 'orders',
+    component: Orders,
+    title: '订单列表'
+  },
+  '/map/:query': {
+    name: 'map',
+    component: Map,
+    title: '地图'
+  }
+})
+
+router.redirect({
+  '*': '/orders'
+})
+
+let auth_required_routes = ['/orders', '/account']
+
+router.beforeEach(function ({ to, next }) {
+  let current_user = cookie.readCookie('user')
+  let token = cookie.readCookie('token')
+  if (!!current_user && !!token) {
+    Vue.http.headers.common['Authorization'] = 'Basic ' + token
+  }
+  for (let route of auth_required_routes) {
+    let reg = new RegExp(route)
+    if (reg.test(to.path) && !current_user) {
+      console.log('redirect to login')
+      router.go('login')
+      break
+    }
+  }
+  next()
+})
+
+var App = Vue.extend({
+  // template: '<div v-component="side-bar"></div><div id="page-content-wrapper"><div v-component="MenuBar" v-ref="menuBar"></div><router-view></router-view></div>',
+  // el: '#wrapper',
+  props: ['currentUser'],
+  data: function () {
+    return {
+      pageTitle: '17yin',
+      token: undefined
+    }
+  },
+  components: {
+    MenuBar: MenuBar,
+    SideBar: SideBar,
+    Login: Login
+  },
+  created: function () {
+    let current_user = cookie.readCookie('user')
+    // let token = cookie.readCookie('token')
+    if (current_user) {
+      this.currentUser = JSON.parse(current_user)
+    }
+  },
+  events: {
+    'user-login': function (user) {
+      this.$broadcast('user-login', user)
+    },
+    'user-logout': function () {
+      this.$broadcast('user-logout')
+      router.go('login')
+    }
+  }
+})
+router.start(App, '#wrapper')

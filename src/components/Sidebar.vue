@@ -1,0 +1,58 @@
+<template>
+  <!-- Sidebar -->
+  <div id="sidebar-wrapper">
+    <ul v-if="!currentUser" class="sidebar-nav">
+      <li class="sidebar-brand">
+        <a v-link="{name: 'login'}">
+          <i class="glyphicon glyphicon-log-in"></i> 登录
+        </a>
+      </li>
+    </ul>
+    <ul v-if="currentUser" class="sidebar-nav">
+      <li class="sidebar-brand">
+        <span><i class="glyphicon glyphicon-user"></i> {{currentUser.name}}</span>
+      </li>
+      <li>
+        <a v-link="{name: 'orders'}"><i class="glyphicon glyphicon-list"></i> 订单</a>
+      </li>
+      <li>
+        <a @click="logout()"><i class="glyphicon glyphicon-log-out"></i> 退出</a>
+      </li>
+    </ul>
+  </div>
+  <!-- /#sidebar-wrapper -->
+
+</template>
+<script>
+  import cookie from './cookie'
+  import jquery from 'jquery'
+  export default {
+    props: ['currentUser'],
+    created: function () {
+      this.currentUser = this.$parent.currentUser
+    },
+    ready: function () {
+      // 菜单点击之后收起
+      jquery('.sidebar-nav li a').bind('click', function () {
+        jquery('#wrapper').toggleClass('toggled')
+      })
+    },
+    methods: {
+      logout: function () {
+        cookie.eraseCookie('user')
+        cookie.eraseCookie('token')
+        this.$dispatch('user-logout')
+        this.currentUser = undefined
+      }
+    },
+    events: {
+      'user-login': function (user) {
+        this.currentUser = user
+      }
+    }
+  }
+</script>
+<style>
+  .yin-side-bar-container {position: absolute; background: rgba(0, 0, 0, .4); width: 100%; height: 100%; z-index: 100;}
+  .yin-side-bar {background: #FFF; height: 100%; width: 40%; }
+</style>
