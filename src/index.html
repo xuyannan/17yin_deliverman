@@ -17,6 +17,8 @@
     {% for (var chunk in o.htmlWebpackPlugin.files.chunks) { %}
     <script src="{%=o.htmlWebpackPlugin.files.chunks[chunk].entry %}"></script>{% } %}
     <style>
+.nopadding {padding: 0 !important;}
+.nomargin{margin: 0 !important;}
 /*!
 * Start Bootstrap - Simple Sidebar HTML Template (http://startbootstrap.com)
 * Code licensed under the Apache License v2.0.
@@ -35,16 +37,16 @@
 }
 
 #wrapper.toggled {
-  padding-left: 250px;
+  /*padding-left: 250px;*/
 }
 
 #sidebar-wrapper {
   z-index: 1000;
   position: fixed;
-  left: 250px;
+  /*left: 250px;*/
   width: 0;
   height: 100%;
-  margin-left: -250px;
+  /*margin-left: -250px;*/
   overflow-y: auto;
   background: #364150;
   -webkit-transition: all 0.5s ease;
@@ -61,12 +63,12 @@
   width: 100%;
   position: absolute;
   height: 100%;
-  overflow: hidden;
 }
 
 #wrapper.toggled #page-content-wrapper {
   position: absolute;
-  margin-right: -250px;
+  left: 0;
+  /*margin-right: -250px;*/
 }
 
 /* Sidebar Styles */
@@ -121,7 +123,7 @@
 
 @media(min-width:768px) {
   #wrapper {
-    padding-left: 250px;
+    /*padding-left: 250px;*/
   }
 
   #wrapper.toggled {
