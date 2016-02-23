@@ -1,6 +1,6 @@
 <template>
   <p>{{optType}} - {{order.id}}</p>
-  <textarea name="reason" style="width:80%" v-model="reason"></textarea>
+  <textarea name="reason" style="width:100%" v-model="reason"></textarea>
   <p>
     <button type="button" name="button" @click="submitForm()">提交</button>
     <button type="button" name="button" @click="cancel()">取消</button>
@@ -16,8 +16,10 @@ export default {
       required: true
     }
   },
-  data: {
-    reason: ' '
+  data: function () {
+    return {
+      reason: ''
+    }
   },
   created: function () {
   },

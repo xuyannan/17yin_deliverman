@@ -1,14 +1,14 @@
 <template>
   <!-- Sidebar -->
   <div id="sidebar-wrapper">
-    <ul v-if="!currentUser" class="sidebar-nav">
+    <ul v-show="!currentUser" class="sidebar-nav">
       <li class="sidebar-brand">
         <a v-link="{name: 'login'}">
           <i class="glyphicon glyphicon-log-in"></i> 登录
         </a>
       </li>
     </ul>
-    <ul v-if="currentUser" class="sidebar-nav">
+    <ul v-show="currentUser" class="sidebar-nav">
       <li class="sidebar-brand">
         <span><i class="glyphicon glyphicon-user"></i> {{currentUser.name}}</span>
       </li>
