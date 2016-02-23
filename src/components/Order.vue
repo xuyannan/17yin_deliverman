@@ -1,4 +1,9 @@
 <template>
+<modal :show.sync="showModal">
+<div slot="body">
+  <order-process-form :order="order" :opt-type="optType"></order-process-form>
+</div>
+</modal>
 <div class="yin-order" v-bind:class="{'yin-order-finished': order.workflow_state == 'finished', 'yin-order-normal': order.workflow_state != 'finished'}">
   <p class="yin-order-title">{{order.id}} <span class="yin-order-product-name">{{order.product_name}}</span> <span class="yin-order-price pull-right">{{order.price}}</span></p>
   <div class="row">
@@ -15,7 +20,7 @@
         <p v-if="order.workflow_state =='ready_to_ship' || order.workflow_state =='delay_to_ship'"><button class="btn btn-xs btn-primary" type="button" @click="processOrder(order.id, 'ship')">配送中</button></p>
         <p v-if="order.workflow_state =='ready_to_ship' || order.workflow_state =='delay_to_ship'"><button class="btn btn-xs btn-primary" type="button" @click="processOrder(order.id, 'not_arrived')">未能接货</button></p>
         <p v-if="order.workflow_state =='shipping'"><button class="btn btn-xs btn-primary" type="button" @click="processOrder(order.id, 'finish')">配送完成</button></p>
-        <p v-if="order.workflow_state =='shipping'"><button class="btn btn-xs btn-primary" type="button">配送异常</button></p>
+        <p v-if="order.workflow_state =='shipping'"><button class="btn btn-xs btn-primary" type="button" @click="openModal('not-reciv')">配送异常</button></p>
       </div>
     </div>
   </div>
@@ -30,7 +35,20 @@ var YinApi = require('17yin')
 var api = new YinApi(Config.API_ROOT)
 var cookie = require('./cookie')
 var swal = require('sweetalert')
+var Modal = require('./Modal')
+var OrderProcessForm = require('./orderProcessForm')
 export default {
+  components: {
+    OrderProcessForm: OrderProcessForm,
+    Modal: Modal
+  },
+  data: function () {
+    return {
+      showModal: false,
+      currentOrder: undefined,
+      optType: undefined
+    }
+  },
   props: ['order'],
   methods: {
     processOrder: function (id, action) {
@@ -49,6 +67,10 @@ export default {
           console.log(res)
         })
       })
+    },
+    openModal: function (optType) {
+      this.optType = optType
+      this.showModal = true
     }
   }
 }
