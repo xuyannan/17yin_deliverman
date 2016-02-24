@@ -31,6 +31,7 @@
   </p>
 </div>
 </template>
+
 <script>
 var Config = require('./config')
 var YinApi = require('17yin')

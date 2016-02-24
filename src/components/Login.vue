@@ -24,7 +24,7 @@
               <span class="errmsg" v-if="!$validation.password.pristine && $validation.password.required">请输入密码</span>
             </p>
             <div class="input-group input-group-lg" style="width: 100%">
-              <a class="btn btn-lg btn-success btn-login" v-on:click="login" :disabled="!$validation.valid">登录</a>
+              <button class="btn btn-lg btn-success btn-login" v-on:click="login" :disabled="!$validation.valid">登录</button>
             </div>
           </form>
         </validator>
@@ -69,15 +69,35 @@ export default {
     login: function () {
       var _this = this
       let token = Base64.encode(this.mobile + ':' + this.password)
+      //   console.log(token)
+      //   Vue.http.headers.common['Authorization'] = 'Basic ' + token
+      //   this.$http.get(Config.API_ROOT + 'login').then(function (response) {
+      //     alert(3)
+      //     cookie.createCookie('token', token, 7)
+      //     cookie.createCookie('user', JSON.stringify(response.data.data), 7)
+      //     // this.$route.router.go('orders')
+      //     // // 派发事件，用户已登录
+      //     // this.$dispatch('user-login', response.data.data)
+      //   },
+      //   function (res) {
+      //     alert(res.data)
+      //     alert(res.status)
+      //     alert(res.statusText)
+      //     // for (var key in res) {
+      //     //   alert(key)
+      //     // }
+      //   }
+      // )
       api.login(this.mobile, this.password).then(
         function (res) {
-          // this.$route.router.go('orders')
           cookie.createCookie('token', token, 7)
           cookie.createCookie('user', JSON.stringify(res), 7)
-          // console.log(_this.$route.router.go('orders'))
           _this.$route.router.go('orders')
           // 派发事件，用户已登录
           _this.$dispatch('user-login', res)
+        },
+        function (res) {
+          alert(res)
         }
       )
     }

@@ -33,11 +33,14 @@
     },
     ready: function () {
       // 菜单点击之后收起
-      jquery('.sidebar-nav li a').bind('click', function () {
+      jquery('.sidebar-nav li a').bind('click', function (e) {
         jquery('#wrapper').toggleClass('toggled')
       })
     },
     methods: {
+      bindMenuEvent: function () {
+
+      },
       logout: function () {
         cookie.eraseCookie('user')
         cookie.eraseCookie('token')

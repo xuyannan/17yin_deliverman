@@ -1,7 +1,7 @@
 <template>
   <div style="padding-top: 15px;">
     <div class="row yin-menubar nomargin">
-      <div class="col-md-12 col-xs-12 no padding">
+      <div class="col-md-12 col-xs-12 nopadding">
         <p><i @click="toggleMenu()" class="glyphicon glyphicon-menu-hamburger"></i><span class="yin-page-title">{{$route.title}}</span></p>
       </div>
     </div>
