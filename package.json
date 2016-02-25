@@ -19,8 +19,7 @@
     "vue-resource": "^0.7.0",
     "vue-router": "^0.7.10",
     "vue-strap": "^1.0.7",
-    "vue-validator": "^2.0.0-alpha.17",
-    "webpack": "^1.12.2"
+    "vue-validator": "^2.0.0-alpha.17"
   },
   "devDependencies": {
     "imports-loader": "^0.6.5",
@@ -63,6 +62,7 @@
     "vue-html-loader": "^1.0.0",
     "vue-loader": "^8.0.0",
     "vue-style-loader": "^1.0.0",
+    "webpack": "^1.12.2",
     "webpack-dev-middleware": "^1.4.0",
     "webpack-hot-middleware": "^2.6.0"
   }
