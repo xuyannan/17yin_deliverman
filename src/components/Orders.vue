@@ -17,17 +17,16 @@
 
 <script>
 import Order from './Order'
-var YinApi = require('17yin')
+var YinApi = require('../lib/17yinApi')
 var Config = require('../config.js')
 var api = new YinApi(Config.API_ROOT)
 import cookie from '../lib/cookie'
+import Vue from 'vue'
+import resource from 'vue-resource'
+Vue.use(resource)
 export default {
   components: {
     order: Order
-  },
-  created: function () {
-  },
-  route: {
   },
   data () {
     return {
@@ -38,10 +37,11 @@ export default {
   ready () {
     let token = cookie.readCookie('token')
     let _this = this
+
     api.getTasks(token).then(
       function (res) {
-        _this.summary = res.summary
-        _this.tasks = res.tasks
+        _this.summary = res.data.data.summary
+        _this.tasks = res.data.data.tasks
       },
       function (res) {
         console.log('error')

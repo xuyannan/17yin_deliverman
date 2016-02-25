@@ -46,7 +46,7 @@
 </template>
 <script>
 var Config = require('../config')
-var YinApi = require('17yin')
+var YinApi = require('../lib/17yinApi')
 var api = new YinApi(Config.API_ROOT)
 var cookie = require('../lib/cookie')
 var swal = require('sweetalert')
@@ -92,8 +92,9 @@ export default {
         showCancelButton: true,
         cancelButtonText: '取消'
       }, function () {
-        api.processOrder(id, action, cookie.readCookie('token')).then(function (res) {
-          _this.order = res
+        let token = cookie.readCookie('token')
+        api.processOrder(id, action, token).then(function (res) {
+          _this.order = res.data.data
         }, function (res) {
           console.log(res)
         })

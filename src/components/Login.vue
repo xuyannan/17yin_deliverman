@@ -38,15 +38,14 @@ import Vue from 'vue'
 import resource from 'vue-resource'
 import validator from 'vue-validator'
 import cookie from '../lib/cookie'
-var Config = require('../config')
-var YinApi = require('17yin')
+import swal from 'sweetalert'
 Vue.use(resource)
 Vue.use(validator)
 
 var Base64 = require('base-64')
+var YinApi = require('../lib/17yinApi')
+var Config = require('../config')
 var api = new YinApi(Config.API_ROOT)
-
-// Vue.http.headers.common['Authorization'] = 'Basic MTg2MTgxMjc3ODU6bmFuemkxN3lpbg=='
 
 Vue.validator('mobile', function (val) {
   return /^(13[0-9]|14[0-9]|15[0-9]|18[0-9])\d{8}$/.test(val)
@@ -67,17 +66,22 @@ export default {
   },
   methods: {
     login: function () {
-      var _this = this
       let token = Base64.encode(this.mobile + ':' + this.password)
-      api.login(this.mobile, this.password).then(
+      var _this = this
+      api.login(token).then(
         function (res) {
-          // this.$route.router.go('orders')
           cookie.createCookie('token', token, 7)
-          cookie.createCookie('user', JSON.stringify(res), 7)
-          // console.log(_this.$route.router.go('orders'))
+          cookie.createCookie('user', JSON.stringify(res.data.data), 7)
           _this.$route.router.go('orders')
           // 派发事件，用户已登录
           _this.$dispatch('user-login', res)
+        },
+        function (res) {
+          swal({
+            title: '提示',
+            text: '登录失败，请确认您的手机号码和密码是否正确',
+            type: 'warning'
+          })
         }
       )
     }

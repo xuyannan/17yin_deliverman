@@ -11,10 +11,13 @@
 </template>
 <script>
 var jquery = require('jquery')
-var YinApi = require('17yin')
+var YinApi = require('../lib/17yinApi')
 var Config = require('../config.js')
 var cookie = require('../lib/cookie')
 var api = new YinApi(Config.API_ROOT)
+import Vue from 'vue'
+import resource from 'vue-resource'
+Vue.use(resource)
 export default {
   data: function () {
     return {
@@ -54,14 +57,11 @@ export default {
     },
     submitForm: function (orderid, action, extra) {
       var _this = this
-      // console.log(_this.order)
-      // _this.order.price = '16.0'
-      //
-      // console.log(_this.order.price)
-      api.processOrder(orderid, action, cookie.readCookie('token'), extra).then(
+      let token = cookie.readCookie('token')
+      api.processOrder(orderid, action, token, extra).then(
         function (res) {
           // TODO: 更科学的更新父组件中order的方式
-          _this.$parent.$parent.order = res
+          _this.$parent.$parent.order = res.data.data
           _this.cancel()
         },
         function (res) {
