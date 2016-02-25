@@ -9,7 +9,7 @@
       <p>
         <a v-link="{name: 'map', params: { query: task.merchant.address }}"><i class="glyphicon glyphicon-map-marker"></i> {{task.merchant.address}}</a>
       </p>
-      <order v-for="order in task.orders" :order="order"></order>
+      <order v-for="order in task.orders" :order.sync="order"></order>
     </div>
 
   </div>
