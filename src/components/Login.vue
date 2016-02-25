@@ -37,7 +37,7 @@
 import Vue from 'vue'
 import resource from 'vue-resource'
 import validator from 'vue-validator'
-import cookie from './cookie'
+import cookie from '../lib/cookie'
 var Config = require('./config')
 var YinApi = require('17yin')
 Vue.use(resource)

@@ -48,7 +48,7 @@
 var Config = require('./config')
 var YinApi = require('17yin')
 var api = new YinApi(Config.API_ROOT)
-var cookie = require('./cookie')
+var cookie = require('../lib/cookie')
 var swal = require('sweetalert')
 var Modal = require('./Modal')
 var OrderProcessForm = require('./orderProcessForm')

@@ -24,7 +24,7 @@
 
 </template>
 <script>
-  import cookie from './cookie'
+  import cookie from '../lib/cookie'
   import jquery from 'jquery'
   export default {
     props: ['currentUser'],

@@ -20,7 +20,7 @@ import Order from './Order'
 var YinApi = require('17yin')
 var Config = require('./config.js')
 var api = new YinApi(Config.API_ROOT)
-import cookie from './cookie'
+import cookie from '../lib/cookie'
 export default {
   components: {
     order: Order
