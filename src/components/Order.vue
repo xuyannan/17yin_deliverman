@@ -1,8 +1,10 @@
 <template>
 <modal :show.sync="showModal">
+<h3 slot="header">订单处理</h3>
 <div slot="body">
-  <order-process-form :order="order" :opt-type="optType"></order-process-form>
+  <order-process-form :order.sync="order" :opt-type="optType"></order-process-form>
 </div>
+<div slot="footer"></div>
 </modal>
 <div class="yin-order" v-bind:class="{'yin-order-finished': order.workflow_state == 'finished', 'yin-order-normal': order.workflow_state != 'finished'}">
   <p class="yin-order-title">{{order.id}} <span class="yin-order-product-name">{{order.product_name}}</span> <span class="yin-order-price pull-right">{{order.price}}</span></p>
@@ -19,11 +21,22 @@
     </div>
   </div>
   <div class="row nomargin">
-    <div class="col-md-12 col-xs-12 nopadding" style="text-align: right">
+    <div class="col-md-12 col-xs-12 nopadding" style="text-align: right; margin-bottom: 8px;">
       <button v-if="order.workflow_state =='ready_to_ship' || order.workflow_state =='delay_to_ship'" class="btn btn-primary" type="button" @click="processOrder(order.id, 'ship')"><i class="glyphicon glyphicon-send"></i> 配送中</button>
-      <button v-if="order.workflow_state =='ready_to_ship' || order.workflow_state =='delay_to_ship'" class="btn btn-danger" type="button" @click="processOrder(order.id, 'not_arrived')"><i class="glyphicon glyphicon-alert"></i> 未能接货</button>
+      <button v-if="order.workflow_state =='ready_to_ship' || order.workflow_state =='delay_to_ship'" class="btn btn-danger" type="button" @click="openModal('not_arrived')"><i class="glyphicon glyphicon-alert"></i> 未能接货</button>
       <button v-if="order.workflow_state =='shipping'" class="btn btn-success" type="button" @click="processOrder(order.id, 'finish')"><i class="glyphicon glyphicon-ok"></i> 配送完成</button>
-      <button v-if="order.workflow_state =='shipping'" class="btn btn-warning" type="button" @click="openModal('not-reciv')"><i class="glyphicon glyphicon-exclamation-sign"></i> 配送异常</button>
+      <button v-if="order.workflow_state =='shipping'" class="btn btn-warning" type="button" @click="openModal('finish-with-exception')"><i class="glyphicon glyphicon-exclamation-sign"></i> 配送异常</button>
+    </div>
+  </div>
+  <div v-if="order.trace_logs.length > 0" class="row nomargin">
+    <div class="col-md-12 col-xs-12 nopadding">
+      <accordion>
+        <panel header="操作历史" :is-open="false">
+          <ul class="yin-order-trace-logs">
+            <li v-for="(index, log) in order.trace_logs">[{{log.created_at.substring(5, log.created_at.length)}}] {{log.content}} {{log.extra.message}}</li>
+          </ul>
+        </panel>
+      </accordion>
     </div>
   </div>
   <p v-if="order.memo" class="yin-order-memo">
@@ -33,17 +46,20 @@
 </template>
 
 <script>
-var Config = require('./config')
-var YinApi = require('17yin')
+var Config = require('../config')
+var YinApi = require('../lib/17yinApi')
 var api = new YinApi(Config.API_ROOT)
-var cookie = require('./cookie')
+var cookie = require('../lib/cookie')
 var swal = require('sweetalert')
 var Modal = require('./Modal')
 var OrderProcessForm = require('./orderProcessForm')
+import { accordion, panel } from 'vue-strap'
 export default {
   components: {
     OrderProcessForm: OrderProcessForm,
-    Modal: Modal
+    Modal: Modal,
+    accordion: accordion,
+    panel: panel
   },
   // data: function () {
   //   return {
@@ -55,7 +71,17 @@ export default {
   created: function () {
     this.showModal = false
   },
-  props: ['order', 'showModal', 'currentOrder', 'optType'],
+  props: {
+    order: {
+      required: true,
+      twoWay: true
+    },
+    showModal: {
+      type: Boolean
+    },
+    currentOrder: {},
+    optType: {}
+  },
   methods: {
     processOrder: function (id, action) {
       let _this = this
@@ -67,8 +93,9 @@ export default {
         showCancelButton: true,
         cancelButtonText: '取消'
       }, function () {
-        api.processOrder(id, action, cookie.readCookie('token')).then(function (res) {
-          _this.order.workflow_state = res.workflow_state
+        let token = cookie.readCookie('token')
+        api.processOrder(id, action, token).then(function (res) {
+          _this.order = res.data.data
         }, function (res) {
           console.log(res)
         })
@@ -103,4 +130,19 @@ export default {
 
   .yin-order-state.yin-order-state-finished {color: green;}
   .yin-order-state.yin-order-state-ship {color: green;}
+  /*override panel style*/
+  .panel-title>.small, .panel-title>.small>a, .panel-title>a, .panel-title>small, .panel-title>small>a {
+    display: inline-block;
+    width: 100%;
+    text-decoration: none;
+  }
+  .panel-body {padding: 2px 0;}
+  .panel-heading {padding: 4px 4px;}
+  .panel-title {font-size: 1em; color: #999;}
+  .panel-group {margin-bottom: 0;}
+  .yin-order-trace-logs {list-style: none; padding: 0; margin: 0;}
+  .yin-order-trace-logs li {min-height: 24px; line-height: 24px; padding-left: 4px; border-bottom: 1px solid #eee;}
+  .yin-order-trace-logs li:last-child {border-bottom: none;}
+
+
 </style>

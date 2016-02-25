@@ -37,16 +37,15 @@
 import Vue from 'vue'
 import resource from 'vue-resource'
 import validator from 'vue-validator'
-import cookie from './cookie'
-var Config = require('./config')
-var YinApi = require('17yin')
+import cookie from '../lib/cookie'
+import swal from 'sweetalert'
 Vue.use(resource)
 Vue.use(validator)
 
 var Base64 = require('base-64')
+var YinApi = require('../lib/17yinApi')
+var Config = require('../config')
 var api = new YinApi(Config.API_ROOT)
-
-// Vue.http.headers.common['Authorization'] = 'Basic MTg2MTgxMjc3ODU6bmFuemkxN3lpbg=='
 
 Vue.validator('mobile', function (val) {
   return /^(13[0-9]|14[0-9]|15[0-9]|18[0-9])\d{8}$/.test(val)
@@ -67,37 +66,22 @@ export default {
   },
   methods: {
     login: function () {
-      var _this = this
       let token = Base64.encode(this.mobile + ':' + this.password)
-      //   console.log(token)
-      //   Vue.http.headers.common['Authorization'] = 'Basic ' + token
-      //   this.$http.get(Config.API_ROOT + 'login').then(function (response) {
-      //     alert(3)
-      //     cookie.createCookie('token', token, 7)
-      //     cookie.createCookie('user', JSON.stringify(response.data.data), 7)
-      //     // this.$route.router.go('orders')
-      //     // // 派发事件，用户已登录
-      //     // this.$dispatch('user-login', response.data.data)
-      //   },
-      //   function (res) {
-      //     alert(res.data)
-      //     alert(res.status)
-      //     alert(res.statusText)
-      //     // for (var key in res) {
-      //     //   alert(key)
-      //     // }
-      //   }
-      // )
-      api.login(this.mobile, this.password).then(
+      var _this = this
+      api.login(token).then(
         function (res) {
           cookie.createCookie('token', token, 7)
-          cookie.createCookie('user', JSON.stringify(res), 7)
+          cookie.createCookie('user', JSON.stringify(res.data.data), 7)
           _this.$route.router.go('orders')
           // 派发事件，用户已登录
           _this.$dispatch('user-login', res)
         },
         function (res) {
-          alert(res)
+          swal({
+            title: '提示',
+            text: '登录失败，请确认您的手机号码和密码是否正确',
+            type: 'warning'
+          })
         }
       )
     }

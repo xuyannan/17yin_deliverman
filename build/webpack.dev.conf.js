@@ -24,6 +24,7 @@ config.plugins = (config.plugins || []).concat([
   new webpack.NoErrorsPlugin(),
   // https://github.com/ampedandwired/html-webpack-plugin
   new HtmlWebpackPlugin({
+    title: '一起印 - 开发环境',
     filename: 'index.html',
     template: 'src/index.html',
     files: {
