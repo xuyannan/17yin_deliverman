@@ -6,7 +6,7 @@ import VueRouter from 'vue-router'
 import Resource from 'vue-resource'
 import cookie from './lib/cookie'
 import MenuBar from './components/MenuBar'
-import SideBar from './components/SideBar'
+import SideBar from './components/Sidebar'
 import Map from './components/Map'
 Vue.use(Resource)
 Vue.use(VueRouter)

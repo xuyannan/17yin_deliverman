@@ -52,7 +52,7 @@ var api = new YinApi(Config.API_ROOT)
 var cookie = require('../lib/cookie')
 var swal = require('sweetalert')
 var Modal = require('./Modal')
-var OrderProcessForm = require('./orderProcessForm')
+var OrderProcessForm = require('./OrderProcessForm')
 import { accordion, panel } from 'vue-strap'
 export default {
   components: {

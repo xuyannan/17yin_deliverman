@@ -1,6 +1,7 @@
 {
   "name": "deliverman",
   "description": "A Vue.js project",
+  "version": "1.0.0",
   "author": "xuyannan",
   "scripts": {
     "dev": "node build/dev-server.js",
@@ -8,12 +9,8 @@
     "test": "karma start build/karma.conf.js --single-run"
   },
   "dependencies": {
-    "17yin": "^1.0.1",
-    "baidu-map": "^0.1.3",
-    "baidumap": "0.0.3",
     "base-64": "^0.1.0",
     "bootstrap": "^3.3.6",
-    "imports-loader": "^0.6.5",
     "jquery": "^2.2.0",
     "sweetalert": "^1.1.3",
     "vue": "^1.0.15",
@@ -23,6 +20,7 @@
     "vue-validator": "^2.0.0-alpha.17"
   },
   "devDependencies": {
+    "imports-loader": "^0.6.5",
     "babel-core": "^6.0.0",
     "babel-loader": "^6.0.0",
     "babel-plugin-transform-runtime": "^6.0.0",
