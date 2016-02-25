@@ -12,7 +12,7 @@
 <script>
 var jquery = require('jquery')
 var YinApi = require('17yin')
-var Config = require('./config.js')
+var Config = require('../config.js')
 var cookie = require('../lib/cookie')
 var api = new YinApi(Config.API_ROOT)
 export default {

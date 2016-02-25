@@ -45,7 +45,7 @@
 </div>
 </template>
 <script>
-var Config = require('./config')
+var Config = require('../config')
 var YinApi = require('17yin')
 var api = new YinApi(Config.API_ROOT)
 var cookie = require('../lib/cookie')
