@@ -49,6 +49,7 @@ config.plugins = (config.plugins || []).concat([
   // you can customize output by editing /build/index.template.html
   // see https://github.com/ampedandwired/html-webpack-plugin
   new HtmlWebpackPlugin({
+    title: '一起印',
     filename: '../index.html',
     template: 'src/index.html'
   })
