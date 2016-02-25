@@ -104,8 +104,8 @@ namespace :webpack do
     queue %{
       echo "-----> webpack deploy"
       #{echo_cmd %[cp "#{deploy_to}/#{shared_path}/src/config.js" ./src/]}
-      #{echo_cmd %[npm install]}
-      #{echo_cmd %[npm run build]}
+      #{echo_cmd %[npm install --production]}
+      #{echo_cmd %[webpack --progress --hide-modules --config build/webpack.prod.conf.js]}
     }
   end
 end
