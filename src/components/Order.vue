@@ -7,17 +7,17 @@
 <div slot="footer"></div>
 </modal>
 <div class="yin-order" v-bind:class="{'yin-order-finished': order.workflow_state == 'finished', 'yin-order-normal': order.workflow_state != 'finished'}">
-  <p class="yin-order-title">{{order.id}} <span class="yin-order-product-name">{{order.product_name}}</span> <span class="yin-order-price pull-right">{{order.price}}</span></p>
+  <p class="yin-order-title">{{order.product_name}}</span> <span class="yin-order-price pull-right">{{order.price}}</span></p>
+  <p>{{order.id}}
+    <span class="yin-order-state yin-order-state-finished pull-right" v-if="order.workflow_state == 'finished'"><i class="glyphicon glyphicon-ok-circle"></i> 已完成</span>
+    <span class="yin-order-state yin-order-state-ship pull-right" v-if="order.workflow_state == 'ready_to_ship' || order.workflow_state == 'delay_to_ship'"><i class="glyphicon glyphicon-export"></i> 出库中</span>
+    <span class="yin-order-state yin-order-state-ship pull-right" v-if="order.workflow_state == 'shipping'"><i class="glyphicon glyphicon-send"></i> 配送中</span>
+  </p>
   <div class="row nomargin">
-    <div class="col-md-8 col-xs-8 nopadding">
+    <div class="col-md-12 col-xs-12 nopadding yin-order-content">
       <p v-for="desc in order.description_list">
         {{$key}} : {{desc}}
       </p>
-    </div>
-    <div class="col-md-4 col-xs-4 nopadding">
-      <span class="yin-order-state yin-order-state-finished" v-if="order.workflow_state == 'finished'"><i class="glyphicon glyphicon-ok-circle"></i> 已完成</span>
-      <span class="yin-order-state yin-order-state-ship" v-if="order.workflow_state == 'ready_to_ship' || order.workflow_state == 'delay_to_ship'"><i class="glyphicon glyphicon-export"></i> 出库中</span>
-      <span class="yin-order-state yin-order-state-ship" v-if="order.workflow_state == 'shipping'"><i class="glyphicon glyphicon-send"></i> 配送中</span>
     </div>
   </div>
   <div class="row nomargin">
@@ -123,13 +123,17 @@ export default {
   .yin-order-normal {
     border-top-color: #1b809e;
   }
+  .yin-order-title {font-size: 1.2em;}
 
   .yin-order-normal .yin-order-title {color: #1b809e;}
   .yin-order-normal .yin-order-product-name: {font-weight: bold; font-size: 1.2em;}
   .yin-order-memo {color: red;}
+  .yin-order-content p {margin: 0 0 4px; color: #666;}
 
   .yin-order-state.yin-order-state-finished {color: green;}
   .yin-order-state.yin-order-state-ship {color: green;}
+
+  .yin-order-finished .yin-order-content p {color: #ccc;}
   /*override panel style*/
   .panel-title>.small, .panel-title>.small>a, .panel-title>a, .panel-title>small, .panel-title>small>a {
     display: inline-block;
@@ -138,7 +142,7 @@ export default {
   }
   .panel-body {padding: 2px 0;}
   .panel-heading {padding: 4px 4px;}
-  .panel-title {font-size: 1em; color: #999;}
+  .panel-title {color: #999;}
   .panel-group {margin-bottom: 0;}
   .yin-order-trace-logs {list-style: none; padding: 0; margin: 0;}
   .yin-order-trace-logs li {min-height: 24px; line-height: 24px; padding-left: 4px; border-bottom: 1px solid #eee;}

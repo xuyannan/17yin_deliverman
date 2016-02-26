@@ -1,6 +1,9 @@
 <template>
   <div class="container">
-    <div v-if="tasks.length == 0 || !tasks" class="yin-on-tasks">
+    <div v-if="loading" class="yin-on-tasks">
+      <i class="glyphicon glyphicon-repeat"></i> 加载中，请稍候
+    </div>
+    <div v-if="!loading && (tasks.length == 0 || !tasks)" class="yin-on-tasks">
       <i class="glyphicon glyphicon-thumbs-up"></i> 暂无订单，休息一会吧
     </div>
     <div v-for="task in tasks">
@@ -34,19 +37,23 @@ export default {
   data () {
     return {
       summary: {},
-      tasks: []
+      tasks: [],
+      loading: false
     }
   },
   ready () {
     let token = cookie.readCookie('token')
     let _this = this
+    _this.loading = true
     api.getTasks(token).then(
       function (res) {
         _this.summary = res.data.data.summary
         _this.tasks = res.data.data.tasks
+        _this.loading = false
       },
       function (res) {
         console.log('error')
+        _this.loading = false
       }
     )
   }
