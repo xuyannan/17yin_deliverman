@@ -17,9 +17,9 @@
         showMenuButton: false
       }
     },
-    creatd: function () {
+    created: function () {
       let current_user = cookie.readCookie('user')
-      this.showMenuButton = !current_user
+      this.showMenuButton = !!current_user // typeof current_user === 'undefined' ? false : true
     },
     methods: {
       toggleMenu: function () {
