@@ -40,7 +40,7 @@ task :environment do
     when 'development'
       set :branch, 'dev'
     when 'staging'
-      set :branch, 'master'
+      set :branch, 'dev'
     when 'production'
       set :branch, 'master'
     else
@@ -104,8 +104,8 @@ namespace :webpack do
     queue %{
       echo "-----> webpack deploy"
       #{echo_cmd %[cp "#{deploy_to}/#{shared_path}/src/config.js" ./src/]}
-      #{echo_cmd %[npm install]}
-      #{echo_cmd %[npm run build]}
+      #{echo_cmd %[cnpm install --production]}
+      #{echo_cmd %[cnpm run build]}
     }
   end
 end
