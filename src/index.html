@@ -8,6 +8,7 @@
   </head>
   <body>
     <div id="wrapper">
+      <div id="sidebar-mask" @click="closeSidebar()"></div>
       <side-bar></side-bar>
       <div id="page-content-wrapper">
         <menu-bar></menu-bar>
@@ -29,46 +30,64 @@
 
     #wrapper {
       padding-left: 0;
-      -webkit-transition: all 0.5s ease;
+      width: 100%;
+      height: 100%;
+      /*-webkit-transition: all 0.5s ease;
       -moz-transition: all 0.5s ease;
       -o-transition: all 0.5s ease;
-      transition: all 0.5s ease;
+      transition: all 0.5s ease;*/
       overflow: hidden;
     }
 
-    #wrapper.toggled {
-      /*padding-left: 250px;*/
+    #wrapper #sidebar-mask {
+      z-index: 999;
+      width: 0;
+      height: 0;
+      position: fixed;
+      background-color: rgba(0, 0, 0, .5)
     }
+
+    #wrapper.toggled {
+      padding-left: 150px;
+    }
+
+    #wrapper.toggled #sidebar-mask{
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, .5)
+    }
+
 
     #sidebar-wrapper {
       z-index: 1000;
       position: fixed;
-      /*left: 250px;*/
+      left: 150px;
       width: 0;
       height: 100%;
-      /*margin-left: -250px;*/
+      margin-left: -150px;
       overflow-y: auto;
       background: #364150;
-      -webkit-transition: all 0.5s ease;
+      /*-webkit-transition: all 0.5s ease;
       -moz-transition: all 0.5s ease;
       -o-transition: all 0.5s ease;
-      transition: all 0.5s ease;
+      transition: all 0.5s ease;*/
     }
 
     #wrapper.toggled #sidebar-wrapper {
-      width: 250px;
+      width: 150px;
     }
 
     #page-content-wrapper {
       width: 100%;
-      position: absolute;
+      /*position: absolute;*/
       height: 100%;
     }
 
     #wrapper.toggled #page-content-wrapper {
       position: absolute;
       left: 0;
-      /*margin-right: -250px;*/
+      /*margin-right: -150px;*/
+      /*padding-left: -150px;*/
     }
 
     /* Sidebar Styles */
@@ -76,7 +95,7 @@
     .sidebar-nav {
       position: absolute;
       top: 0;
-      width: 250px;
+      width: 150px;
       margin: 0;
       padding: 0;
       list-style: none;
@@ -85,7 +104,6 @@
     .sidebar-nav li {
       line-height: 40px;
       height: 40px;
-      padding: 0 20px;
       border-bottom: 1px solid #606C7D;
     }
 
@@ -93,6 +111,7 @@
       display: block;
       text-decoration: none;
       color: #b4bcc8;
+      padding: 0 20px;
     }
 
     .sidebar-nav li a:hover {
@@ -107,13 +126,17 @@
     }
 
     .sidebar-nav > .sidebar-brand {
-      height: 65px;
+      height: 50px;
       font-size: 18px;
-      line-height: 60px;
+      line-height: 50px;
     }
 
-    .sidebar-nav > .sidebar-brand a, .sidebar-nav > .sidebar-brand{
+    .sidebar-nav > .sidebar-brand{
       color: #b4bcc8;
+    }
+
+    .sidebar-nav > .sidebar-brand a {
+      padding: 0 20px;
     }
 
     .sidebar-nav > .sidebar-brand a:hover {
@@ -123,7 +146,7 @@
 
     @media(min-width:768px) {
       #wrapper {
-        /*padding-left: 250px;*/
+        /*padding-left: 150px;*/
       }
 
       #wrapper.toggled {
@@ -131,7 +154,7 @@
       }
 
       #sidebar-wrapper {
-        width: 250px;
+        width: 150px;
       }
 
       #wrapper.toggled #sidebar-wrapper {

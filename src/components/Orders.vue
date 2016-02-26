@@ -37,7 +37,6 @@ export default {
   ready () {
     let token = cookie.readCookie('token')
     let _this = this
-
     api.getTasks(token).then(
       function (res) {
         _this.summary = res.data.data.summary

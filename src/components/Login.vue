@@ -74,7 +74,7 @@ export default {
           cookie.createCookie('user', JSON.stringify(res.data.data), 7)
           _this.$route.router.go('orders')
           // 派发事件，用户已登录
-          _this.$dispatch('user-login', res)
+          _this.$dispatch('user-login', res.data.data)
         },
         function (res) {
           swal({

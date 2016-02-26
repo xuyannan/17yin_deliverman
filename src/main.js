@@ -8,6 +8,7 @@ import cookie from './lib/cookie'
 import MenuBar from './components/MenuBar'
 import SideBar from './components/Sidebar'
 import Map from './components/Map'
+import jquery from 'jquery'
 Vue.use(Resource)
 Vue.use(VueRouter)
 
@@ -78,6 +79,11 @@ var App = Vue.extend({
     // let token = cookie.readCookie('token')
     if (current_user) {
       this.currentUser = JSON.parse(current_user)
+    }
+  },
+  methods: {
+    closeSidebar: function () {
+      jquery('#wrapper').toggleClass('toggled')
     }
   },
   events: {

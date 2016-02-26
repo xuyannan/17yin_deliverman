@@ -10,7 +10,7 @@
     </ul>
     <ul v-show="currentUser" class="sidebar-nav">
       <li class="sidebar-brand">
-        <span><i class="glyphicon glyphicon-user"></i> {{currentUser.name}}</span>
+        <a><i class="glyphicon glyphicon-user"></i> {{currentUser.name}}</span></a>
       </li>
       <li>
         <a v-link="{name: 'orders'}"><i class="glyphicon glyphicon-list"></i> 订单</a>
@@ -26,6 +26,7 @@
 <script>
   import cookie from '../lib/cookie'
   import jquery from 'jquery'
+  // import tools from '../lib/tools'
   export default {
     props: ['currentUser'],
     created: function () {
@@ -36,6 +37,10 @@
       jquery('.sidebar-nav li a').bind('click', function (e) {
         jquery('#wrapper').toggleClass('toggled')
       })
+      // var eles = tools.query('.sidebar-nav li a')
+      // eles.forEach(function (ele) {
+      //   console.log(ele)
+      // })
     },
     methods: {
       bindMenuEvent: function () {
