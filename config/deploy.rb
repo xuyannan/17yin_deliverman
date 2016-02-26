@@ -27,7 +27,7 @@ set :port, '22'     # SSH port number.
 set :term_mode, nil
 
 stage = ENV['to']
-set :deploy_to, "/opt/deploy/#{stage}/stage.kuai.yin17.com"
+set :deploy_to, "/opt/deploy/#{stage}/kuai.yin17.com"
 
 #   set :forward_agent, true     # SSH forward_agent.
 
@@ -104,8 +104,8 @@ namespace :webpack do
     queue %{
       echo "-----> webpack deploy"
       #{echo_cmd %[cp "#{deploy_to}/#{shared_path}/src/config.js" ./src/]}
-      #{echo_cmd %[npm install --production]}
-      #{echo_cmd %[webpack --progress --hide-modules --config build/webpack.prod.conf.js]}
+      #{echo_cmd %[npm install]}
+      #{echo_cmd %[npm run build]}
     }
   end
 end

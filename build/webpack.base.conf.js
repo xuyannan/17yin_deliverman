@@ -9,7 +9,7 @@ module.exports = {
     publicPath: '/static/',
     filename: '[name].js'
   },
-  plugins: [new webpack.optimize.UglifyJsPlugin({minimize: true})],
+  // plugins: [new webpack.optimize.UglifyJsPlugin({minimize: true})],
   resolve: {
     extensions: ['', '.js', '.vue'],
     alias: {
