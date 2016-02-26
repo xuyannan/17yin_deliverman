@@ -67,14 +67,26 @@ export default {
   methods: {
     login: function () {
       let token = Base64.encode(this.mobile + ':' + this.password)
+      let authority = {
+        deliveryman: true
+      }
       var _this = this
       api.login(token).then(
         function (res) {
-          cookie.createCookie('token', token, 7)
-          cookie.createCookie('user', JSON.stringify(res.data.data), 7)
-          _this.$route.router.go('orders')
-          // 派发事件，用户已登录
-          _this.$dispatch('user-login', res.data.data)
+          let user = res.data.data
+          if (user && authority[user.state]) {
+            cookie.createCookie('token', token, 7)
+            cookie.createCookie('user', JSON.stringify(res.data.data), 7)
+            _this.$route.router.go('orders')
+            // 派发事件，用户已登录
+            _this.$dispatch('user-login', res.data.data)
+          } else {
+            swal({
+              title: '提示',
+              text: 'sorry，您暂时没有访问权限',
+              type: 'warning'
+            })
+          }
         },
         function (res) {
           swal({

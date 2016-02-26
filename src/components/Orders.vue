@@ -1,5 +1,8 @@
 <template>
   <div class="container">
+    <div v-if="tasks.length == 0 || !tasks" class="yin-on-tasks">
+      <i class="glyphicon glyphicon-thumbs-up"></i> 暂无订单，休息一会吧
+    </div>
     <div v-for="task in tasks">
       <p class="yin-merchant-title">
         <span class="yin-merchant-name">{{task.merchant.name}}</span>
@@ -54,4 +57,5 @@ export default {
 .yin-merchant-title {height: 40px; line-height: 40px;}
 .yin-merchant-title .yin-merchant-name {font-weight: bold; font-size: 1.4em;}
 .yin-merchant-payment {font-size: 1.4em; color: #1b809e;}
+.yin-on-tasks {font-size: 1.2em; color: #ccc; text-align: center; margin-top: 20px;}
 </style>
