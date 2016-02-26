@@ -104,7 +104,6 @@ namespace :webpack do
     set :shared_paths, ['src/config.js', 'log', 'node_modules']
     queue %{
       echo "-----> webpack deploy"
-      #{echo_cmd %[cp "#{deploy_to}/#{shared_path}/src/config.js" ./src/]}
       #{invoke :'deploy:link_shared_paths'}
       #{echo_cmd %[cnpm install]}
       #{echo_cmd %[cnpm run build]}

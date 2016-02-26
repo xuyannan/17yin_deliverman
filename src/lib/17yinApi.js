@@ -13,7 +13,7 @@ Yin17Api.prototype.login = function (token) {
 
 Yin17Api.prototype.getTasks = function (token) {
   Vue.http.headers.common.Authorization = 'Basic ' + token
-  return Vue.http.get('deliveryman/orders')
+  return Vue.http.get(this.apiRootUrl + 'deliveryman/orders')
 }
 
 Yin17Api.prototype.processOrder = function (orderid, action, token, memo) {
