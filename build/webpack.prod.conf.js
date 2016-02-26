@@ -45,7 +45,7 @@ config.plugins = (config.plugins || []).concat([
   }),
   new webpack.optimize.OccurenceOrderPlugin(),
   // extract css into its own file
-  new ExtractTextPlugin('[name].[].css'),
+  new ExtractTextPlugin('[name].[chunkhash].css'),
   // generate dist index.html with correct asset hash for caching.
   // you can customize output by editing /build/index.template.html
   // see https://github.com/ampedandwired/html-webpack-plugin
