@@ -2,7 +2,7 @@
   <div style="padding-top: 15px;">
     <div class="row yin-menubar nomargin">
       <div class="col-md-12 col-xs-12 nopadding">
-        <p><i @click="toggleMenu()" class="glyphicon glyphicon-menu-hamburger"></i><span class="yin-page-title">{{$route.title}}</span></p>
+        <p><i v-if="showMenuButton" @click="toggleMenu()" class="glyphicon glyphicon-menu-hamburger"></i><span class="yin-page-title">{{$route.title}}</span></p>
       </div>
     </div>
   </div>
@@ -10,10 +10,28 @@
 </template>
 <script>
   var $ = require('jquery')
+  var cookie = require('../lib/cookie')
   export default {
+    data: function () {
+      return {
+        showMenuButton: false
+      }
+    },
+    creatd: function () {
+      let current_user = cookie.readCookie('user')
+      this.showMenuButton = !current_user
+    },
     methods: {
       toggleMenu: function () {
         $('#wrapper').toggleClass('toggled')
+      }
+    },
+    events: {
+      'user-login': function (user) {
+        this.showMenuButton = true
+      },
+      'user-logout': function (user) {
+        this.showMenuButton = false
       }
     }
   }
