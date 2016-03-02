@@ -79,17 +79,9 @@
 
     #page-content-wrapper {
       width: 100%;
-      /*position: absolute;*/
+      position: absolute;
       height: 100%;
     }
-
-    #wrapper.toggled #page-content-wrapper {
-      position: absolute;
-      left: 0;
-      /*margin-right: -150px;*/
-      /*padding-left: -150px;*/
-    }
-
     /* Sidebar Styles */
 
     .sidebar-nav {
@@ -129,10 +121,8 @@
       height: 50px;
       font-size: 18px;
       line-height: 50px;
-    }
-
-    .sidebar-nav > .sidebar-brand{
       color: #b4bcc8;
+      white-space: nowrap;
     }
 
     .sidebar-nav > .sidebar-brand a {
@@ -169,6 +159,7 @@
       #wrapper.toggled #page-content-wrapper {
         position: relative;
         margin-right: 0;
+        height: 100%;
       }
     }
     </style>
