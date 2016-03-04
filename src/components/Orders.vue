@@ -13,7 +13,10 @@
         <span class="yin-merchant-payment pull-right">{{task.payment}}</span>
       </p>
       <p>
-        <a v-link="{name: 'map', params: { query: task.merchant.address }}"><i class="glyphicon glyphicon-map-marker"></i> {{task.merchant.address}}</a>
+        <!-- <a v-link="{name: 'map', params: { merchant: task.merchant.id }}"><i class="glyphicon glyphicon-map-marker"></i> {{task.merchant.address}}</a> -->
+        <a @click='openMap(task.merchant)'>
+          <i v-if="task.merchant.coordinate" class="glyphicon glyphicon-map-marker"></i><i style="color: #d9534f !important" v-if="!task.merchant.coordinate" class="glyphicon glyphicon-question-sign"></i> {{task.merchant.address}}
+        </a>
       </p>
       <order v-for="order in task.orders" :order.sync="order"></order>
     </div>
@@ -29,6 +32,7 @@ var api = new YinApi(Config.API_ROOT)
 import cookie from '../lib/cookie'
 import Vue from 'vue'
 import resource from 'vue-resource'
+var store = require('../store')
 Vue.use(resource)
 export default {
   components: {
@@ -56,6 +60,16 @@ export default {
         _this.loading = false
       }
     )
+  },
+  methods: {
+    openMap: function (merchant) {
+      store.dispatch('SET_CURRENT_MERCHANT', merchant)
+      console.log(this.$route)
+      this.$route.router.go({
+        name: 'map',
+        params: { merchant: merchant.id }
+      })
+    }
   }
 }
 </script>

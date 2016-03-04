@@ -55,6 +55,7 @@ var swal = require('sweetalert')
 var Modal = require('./Modal')
 var OrderProcessForm = require('./OrderProcessForm')
 import { accordion, panel } from 'vue-strap'
+
 export default {
   components: {
     OrderProcessForm: OrderProcessForm,

@@ -24,4 +24,15 @@ Yin17Api.prototype.processOrder = function (orderid, action, token, memo) {
   })
 }
 
+Yin17Api.prototype.updateMerchantLocation = function (params) {
+  var url = `users/${params.merchant.id}/coordinate`
+  Vue.http.headers.common.Authorization = 'Basic ' + params.token
+  return Vue.http.post(this.apiRootUrl + url, {
+    lng: params.point.lng,
+    lat: params.point.lat,
+    provider: 'baidu',
+    axis: 'bd09ll'
+  })
+}
+
 module.exports = Yin17Api

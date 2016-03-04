@@ -29,7 +29,7 @@ router.map({
     component: Orders,
     title: '订单列表'
   },
-  '/map/:query': {
+  '/map/:merchant': {
     name: 'map',
     component: Map,
     title: '地图'
@@ -57,6 +57,9 @@ router.beforeEach(function ({ to, next }) {
     }
   }
   next()
+})
+
+router.afterEach(function (transition) {
 })
 
 var App = Vue.extend({
