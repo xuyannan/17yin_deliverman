@@ -34,7 +34,8 @@ export default {
       marking: false,
       map: null,
       defaultPoint: null,
-      myPositionMaker: null
+      myPositionMaker: null,
+      infoWindow: null
     }
   },
   computed: {
@@ -69,10 +70,12 @@ export default {
 
         this.marking = false
         if (this.myPositionMaker) {
-          console.log('cancel with two points')
           this.map.setViewport([this.myPositionMaker.point, this.marker.point])
         } else {
           this.map.panTo(this.defaultPoint)
+        }
+        if (this.infoWindow) {
+          this.map.openInfoWindow(this.infoWindow, this.marker.point)
         }
       }
     },
@@ -94,7 +97,9 @@ export default {
         }
         _this.marker.disableDragging()
         _this.marking = false
-
+        if (_this.infoWindow) {
+          _this.map.openInfoWindow(_this.infoWindow, _this.marker.point)
+        }
       }, function (res) {
         alert('标记失败')
         _this.marking = false
@@ -130,6 +135,14 @@ export default {
         }
       }, {enableHighAccuracy: true})
 
+      // 初始化infoWindow
+      let infoWindow = new BMap.InfoWindow(_this.merchant.address, {
+        width: 80,
+        height: 30,
+        title: _this.merchant.name
+      })
+      _this.infoWindow = infoWindow
+
       // 初始化marker
       if (_this.merchant.coordinate) {
         let _point = new BMap.Point(_this.merchant.coordinate.lng, _this.merchant.coordinate.lat)
@@ -138,6 +151,8 @@ export default {
         map.centerAndZoom(_this.marker.point, 18)
         map.addOverlay(_this.marker)
         map.panTo(_this.marker.point)
+        map.openInfoWindow(_this.infoWindow, _point)
+        // _this.infoWindow = infoWindow
       } else {
         geolocation = new BMap.Geolocation()
         geolocation.getCurrentPosition(function (r) {
