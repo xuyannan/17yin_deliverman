@@ -45,6 +45,11 @@ export default {
       loading: false
     }
   },
+  computed: {
+    tasks () {
+      return store.state.tasks
+    }
+  },
   ready () {
     let token = cookie.readCookie('token')
     let _this = this
@@ -52,7 +57,8 @@ export default {
     api.getTasks(token).then(
       function (res) {
         _this.summary = res.data.data.summary
-        _this.tasks = res.data.data.tasks
+        // _this.tasks = res.data.data.tasks
+        store.state.tasks = res.data.data.tasks
         _this.loading = false
       },
       function (res) {
@@ -64,7 +70,6 @@ export default {
   methods: {
     openMap: function (merchant) {
       store.dispatch('SET_CURRENT_MERCHANT', merchant)
-      console.log(this.$route)
       this.$route.router.go({
         name: 'map',
         params: { merchant: merchant.id }

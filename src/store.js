@@ -5,7 +5,7 @@ Vue.use(Vuex)
 
 const state = {
   currentMerchant: {},
-  tasks: {}
+  tasks: []
 }
 
 const actions = {

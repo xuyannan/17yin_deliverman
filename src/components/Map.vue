@@ -81,6 +81,7 @@ export default {
     },
     updateMerchantLocation: function () {
       let _this = this
+      _this.merchant = _this.merchant || store.state.currentMerchant
       api.updateMerchantLocation({
         merchant: _this.merchant,
         point: _this.marker.point,
@@ -121,13 +122,12 @@ export default {
       geolocation.getCurrentPosition(function (r) {
         if (this.getStatus() === window.BMAP_STATUS_SUCCESS) {
           var icon = new BMap.Icon('http://api0.map.bdimg.com/images/geolocation-control/point/position-icon-14x14.png', new BMap.Size(14, 14))
-          console.log(icon)
           _this.myPositionMaker = new BMap.Marker(r.point, {icon: icon})
           map.addOverlay(_this.myPositionMaker)
           _this.myPositionMaker.setAnimation(window.BMAP_ANIMATION_DROP)
 
-          if (_this.merchant.coordinate) {
-            let _point = new BMap.Point(_this.merchant.coordinate.lng, _this.merchant.coordinate.lat)
+          if (store.state.currentMerchant.coordinate) {
+            let _point = new BMap.Point(store.state.currentMerchant.coordinate.lng, store.state.currentMerchant.coordinate.lat)
             map.setViewport([_point, r.point])
           }
         } else {
@@ -136,16 +136,16 @@ export default {
       }, {enableHighAccuracy: true})
 
       // 初始化infoWindow
-      let infoWindow = new BMap.InfoWindow(_this.merchant.address, {
+      let infoWindow = new BMap.InfoWindow(store.state.currentMerchant.address, {
         width: 80,
         height: 30,
-        title: _this.merchant.name
+        title: store.state.currentMerchant.name
       })
       _this.infoWindow = infoWindow
 
       // 初始化marker
-      if (_this.merchant.coordinate) {
-        let _point = new BMap.Point(_this.merchant.coordinate.lng, _this.merchant.coordinate.lat)
+      if (store.state.currentMerchant.coordinate) {
+        let _point = new BMap.Point(store.state.currentMerchant.coordinate.lng, store.state.currentMerchant.coordinate.lat)
         _this.defaultPoint = _point
         _this.marker = new BMap.Marker(_point)
         map.centerAndZoom(_this.marker.point, 18)
@@ -192,6 +192,6 @@ export default {
 <style>
 .buttonsContainer {margin-bottom: 4px;}
 .mapContainer {height: 100%; width: 100%; position: relative;}
-.mapContainer .mapHeader {position: absolute; top: 0; min-height: 80px; overflow-y: auto;z-index: 9999; background-color: rgba(255, 255, 255, 0.8); width: 100%;}
+.mapContainer .mapHeader {position: absolute; top: 0; min-height: 80px; overflow-y: auto;z-index: 998; background-color: rgba(255, 255, 255, 0.8); width: 100%;}
 .mapContainer .mapBody {width: 100%; height: 100%; position: absolute; top: 0;}
 </style>

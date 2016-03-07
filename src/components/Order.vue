@@ -34,7 +34,7 @@
       <accordion>
         <panel header="操作历史" :is-open="false">
           <ul class="yin-order-trace-logs">
-            <li v-for="(index, log) in order.trace_logs">[{{log.created_at.substring(5, log.created_at.length)}}] {{log.operator}} {{log.content}} {{log.extra.message}}</li>
+            <li v-for="(index, log) in order.trace_logs">[{{log.created_at.substring(5, log.created_at.length)}}] {{log.operator}} {{log.content}} {{log.extra&&log.extra.message}}</li>
           </ul>
         </panel>
       </accordion>

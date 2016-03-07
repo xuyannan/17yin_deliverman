@@ -8,6 +8,8 @@ import cookie from './lib/cookie'
 import MenuBar from './components/MenuBar'
 import SideBar from './components/Sidebar'
 import Map from './components/Map'
+import TasksList from './components/TasksList'
+import TasksMap from './components/TasksMap'
 import jquery from 'jquery'
 Vue.use(Resource)
 Vue.use(VueRouter)
@@ -33,6 +35,16 @@ router.map({
     name: 'map',
     component: Map,
     title: '地图'
+  },
+  '/tasks/list': {
+    name: 'tasksList',
+    component: TasksList,
+    title: '任务列表 - 列表'
+  },
+  '/tasks/map': {
+    name: 'tasksMap',
+    component: TasksMap,
+    title: '任务列表 - 地图'
   }
 })
 
