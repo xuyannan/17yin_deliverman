@@ -11,7 +11,8 @@
   <p>{{order.id}}
     <span class="yin-order-state yin-order-state-finished pull-right" v-if="order.workflow_state == 'deadline'"><i class="glyphicon glyphicon-tasks"></i> 印刷中</span>
     <span class="yin-order-state yin-order-state-finished pull-right" v-if="order.workflow_state == 'finished'"><i class="glyphicon glyphicon-ok-circle"></i> 已完成</span>
-    <span class="yin-order-state yin-order-state-ship pull-right" v-if="order.workflow_state == 'ready_to_ship' || order.workflow_state == 'delay_to_ship'"><i class="glyphicon glyphicon-export"></i> 出库中</span>
+    <span class="yin-order-state yin-order-state-ship pull-right" v-if="order.workflow_state == 'ready_to_ship'"><i class="glyphicon glyphicon-export"></i> 出库中</span>
+    <span class="yin-order-state yin-order-state-ship pull-right" v-if="order.workflow_state == 'delay_to_ship'"><i class="glyphicon glyphicon-warning-sign"></i> 出库中(延迟)</span>
     <span class="yin-order-state yin-order-state-ship pull-right" v-if="order.workflow_state == 'shipping'"><i class="glyphicon glyphicon-send"></i> 配送中</span>
   </p>
   <div class="row nomargin">

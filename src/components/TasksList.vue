@@ -1,6 +1,9 @@
 <template>
 <p style="margin: 0;padding: 8px; color: #337ab7"><i class="glyphicon glyphicon-globe"></i> <a v-link="{name: 'tasksMap'}">在地图上显示</a></p>
 <div>
+  <div v-if="(tasks.length == 0 || !tasks)" class="yin-on-tasks">
+    <i class="glyphicon glyphicon-thumbs-up"></i> 暂无订单，休息一会吧
+  </div>
   <ul class="yin-list">
     <li v-for="task in tasks" @click='openMap(task.merchant)'>
       <h4>{{task.merchant.name}} <span class="pull-right">{{task.orders.length}}单/{{task.payment}}元</span></h4>
