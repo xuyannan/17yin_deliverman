@@ -1,5 +1,5 @@
 <template>
-  <div style="padding-top: 15px;">
+  <div style="padding-top: 15px; z-index:1998">
     <div class="row yin-menubar nomargin">
       <div class="col-md-12 col-xs-12 nopadding">
         <p><i v-if="showMenuButton" @click="toggleMenu()" class="glyphicon glyphicon-menu-hamburger"></i><span class="yin-page-title">{{$route.title}}</span></p>

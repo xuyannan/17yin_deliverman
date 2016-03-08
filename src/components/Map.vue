@@ -178,11 +178,12 @@ export default {
       // map.addControl(navigationControl)
 
       // 添加定位控件
-      // var geolocationControl = new BMap.GeolocationControl()
-      // geolocationControl.addEventListener('locationSuccess', function (e) {
-      //   console.log(e)
-      // })
-      // map.addControl(geolocationControl)
+      var geolocationControl = new BMap.GeolocationControl()
+      geolocationControl.addEventListener('locationSuccess', function (e) {
+        _this.myPositionMaker.point = e.point
+        _this.map.setViewport([e.point, _this.marker.point])
+      })
+      map.addControl(geolocationControl)
     }
     window.document.body.appendChild(script)
     window.scrollTo(0, 0)
@@ -193,6 +194,7 @@ export default {
 <style>
 .buttonsContainer {margin-bottom: 4px;}
 .mapContainer {height: 100%; width: 100%; position: relative;}
-.mapContainer .mapHeader {position: absolute; top: 0; min-height: 80px; overflow-y: auto;z-index: 998; background-color: rgba(255, 255, 255, 0.8); width: 100%;}
-.mapContainer .mapBody {width: 100%; height: 100%; position: absolute; top: 0;}
+.mapContainer .mapHeader {position: absolute; top: 0; min-height: 80px; overflow-y: auto;z-index: 997; background-color: rgba(255, 255, 255, 0.8); width: 100%;}
+.mapContainer .mapBody {width: 100%; height: 100%; position: absolute; }
+.BMap_noprint.anchorBL {bottom: 56px!important;}
 </style>
