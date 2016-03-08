@@ -1,5 +1,6 @@
 <template>
-<p style="margin: 0;padding: 8px; color: #337ab7"><i class="glyphicon glyphicon-th-list"></i> <a v-link="{name: 'tasksList'}">列表显示</a></p>
+<p style="margin: 0;padding: 8px; color: #337ab7"><span class="pull-right"><i class="glyphicon glyphicon-th-list"></i> <a v-link="{name: 'tasksList'}">列表显示</a></span></p>
+<div style="clear: both"></div>
 <div class="map">
   <div id="map"><div>
 </div>
