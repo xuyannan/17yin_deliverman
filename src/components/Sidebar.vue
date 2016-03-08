@@ -50,10 +50,12 @@
 
       },
       logout: function () {
-        cookie.eraseCookie('user')
-        cookie.eraseCookie('token')
-        this.$dispatch('user-logout')
-        this.currentUser = undefined
+        if (confirm('确定退出?')) {
+          cookie.eraseCookie('user')
+          cookie.eraseCookie('token')
+          this.$dispatch('user-logout')
+          this.currentUser = undefined
+        }
       }
     },
     events: {
