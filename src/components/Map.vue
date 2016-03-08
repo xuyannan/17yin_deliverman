@@ -4,14 +4,15 @@
       <h5>{{merchant.name}}</h5>
       <p>{{merchant.address}}</p>
       <div class="buttonsContainer">
-        <button v-if="!marking && merchant.coordinate" class="btn btn-sm btn-success" v-on:click="startMarking()"><i class="glyphicon glyphicon-pushpin"></i> 重新标注</button>
-        <button v-if="!marking && !merchant.coordinate" class="btn btn-sm btn-success" v-on:click="startMarking()"><i class="glyphicon glyphicon-pushpin"></i> 在地图上标注</button>
+        <button v-if="!marking && merchant.coordinate" class="btn btn-sm btn-success pull-right" v-on:click="startMarking()"><i class="glyphicon glyphicon-pushpin"></i> 重新标注</button>
+        <button v-if="!marking && !merchant.coordinate" class="btn btn-sm btn-success pull-right" v-on:click="startMarking()"><i class="glyphicon glyphicon-pushpin"></i> 在地图上标注</button>
 
         <div v-if="marking">
-          <button class="btn btn-sm btn-primary" v-on:click="updateMerchantLocation()"><i class="glyphicon glyphicon-ok-circle"></i> 保存</button>
-          <button class="btn btn-sm btn-warning" v-on:click="cancelMarking()"><i class="glyphicon glyphicon-ban-circle"></i> 取消</button>
+          <button class="btn btn-sm btn-primary pull-right" v-on:click="updateMerchantLocation()"><i class="glyphicon glyphicon-ok-circle"></i> 保存</button>
+          <button class="btn btn-sm btn-warning pull-right" v-on:click="cancelMarking()"><i class="glyphicon glyphicon-ban-circle"></i> 取消</button>
           <span>{{marker.point.lng}}, {{marker.point.lat}}</span>
         </div>
+        <div style="clear: both"></div>
       </div>
     </div>
 
