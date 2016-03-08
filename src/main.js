@@ -10,6 +10,7 @@ import SideBar from './components/Sidebar'
 import Map from './components/Map'
 import TasksList from './components/TasksList'
 import TasksMap from './components/TasksMap'
+import History from './components/History'
 import jquery from 'jquery'
 Vue.use(Resource)
 Vue.use(VueRouter)
@@ -45,6 +46,11 @@ router.map({
     name: 'tasksMap',
     component: TasksMap,
     title: '任务列表 - 地图'
+  },
+  '/history': {
+    name: 'history',
+    component: History,
+    title: '历史记录'
   }
 })
 

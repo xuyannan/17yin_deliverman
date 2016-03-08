@@ -18,7 +18,7 @@
           <i v-if="task.merchant.coordinate" class="glyphicon glyphicon-map-marker"></i><i style="color: #d9534f !important" v-if="!task.merchant.coordinate" class="glyphicon glyphicon-question-sign"></i> {{task.merchant.address}}
         </a>
       </p>
-      <order v-for="order in task.orders" :order.sync="order"></order>
+      <order v-if="order.workflow_state !== 'finished'" v-for="order in task.orders" :order.sync="order"></order>
     </div>
 
   </div>
@@ -48,6 +48,9 @@ export default {
   computed: {
     tasks () {
       return store.state.tasks
+    },
+    totalPayment () {
+
     }
   },
   ready () {
@@ -57,7 +60,7 @@ export default {
     api.getTasks(token).then(
       function (res) {
         _this.summary = res.data.data.summary
-        // _this.tasks = res.data.data.tasks
+        // _this.tasks = res.data.data.
         store.state.tasks = res.data.data.tasks
         _this.loading = false
       },
@@ -74,6 +77,9 @@ export default {
         name: 'map',
         params: { merchant: merchant.id }
       })
+    },
+    deleteOrder: function (order) {
+      store.dispatch('DELET_ORDER', order)
     }
   }
 }

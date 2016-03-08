@@ -7,6 +7,7 @@
 <div slot="footer"></div>
 </modal>
 <div class="yin-order" v-bind:class="{'yin-order-finished': order.workflow_state == 'finished', 'yin-order-normal': order.workflow_state != 'finished'}">
+  <p class="yin-order-title" v-if="order.merchant" style='color: #1b809e!important'>{{order.merchant.name}}</p>
   <p class="yin-order-title">{{order.product_name}}</span> <span class="yin-order-price pull-right">{{order.price}}</span></p>
   <p>{{order.id}}
     <span class="yin-order-state yin-order-state-finished pull-right" v-if="order.workflow_state == 'deadline'"><i class="glyphicon glyphicon-tasks"></i> 印刷中</span>
@@ -55,6 +56,10 @@ var cookie = require('../lib/cookie')
 var swal = require('sweetalert')
 var Modal = require('./Modal')
 var OrderProcessForm = require('./OrderProcessForm')
+// var store = require('../store')
+// import Vue from 'vue'
+// import Vuex from 'vuex'
+// Vue.use(Vuex)
 import { accordion, panel } from 'vue-strap'
 
 export default {
@@ -97,8 +102,14 @@ export default {
         cancelButtonText: '取消'
       }, function () {
         let token = cookie.readCookie('token')
+        // _this.$parent.deleteOrder(_this.order)
+        // console.log(token, api)
         api.processOrder(id, action, token).then(function (res) {
           _this.order = res.data.data
+          // 完成订单从列表中删除
+          if (_this.order.workflow_state === 'finished') {
+            _this.$parent.deleteOrder(_this.order)
+          }
         }, function (res) {
           console.log(res)
         })

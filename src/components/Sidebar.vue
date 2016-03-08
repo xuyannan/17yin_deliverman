@@ -19,6 +19,9 @@
         <a v-link="{name: 'tasksList'}"><i class="glyphicon glyphicon-certificate"></i> 门店</a>
       </li>
       <li>
+        <a v-link="{name: 'history'}"><i class="glyphicon glyphicon-calendar"></i> 历史</a>
+      </li>
+      <li>
         <a @click="logout()"><i class="glyphicon glyphicon-log-out"></i> 退出</a>
       </li>
     </ul>
