@@ -58,7 +58,7 @@ router.redirect({
   '*': '/orders'
 })
 
-let auth_required_routes = ['/orders', '/account']
+let auth_required_routes = ['/orders', '/account', '/history']
 
 router.beforeEach(function ({ to, next }) {
   let current_user = cookie.readCookie('user')

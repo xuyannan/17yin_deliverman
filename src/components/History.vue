@@ -1,5 +1,11 @@
 <template>
   <div class="container">
+    <div v-if="loading" class="yin-on-tasks">
+      <i class="glyphicon glyphicon-repeat"></i> 加载中，请稍候
+    </div>
+    <div v-if="!loading && (tasks.length == 0 || !tasks)" class="yin-on-tasks">
+      <i class="glyphicon glyphicon-thumbs-up"></i> 暂无订单，休息一会吧
+    </div>
     <order v-for="order in tasks" :order.sync="order"></order>
 </div>
 </template>
@@ -15,12 +21,12 @@ import Order from './Order'
 Vue.use(resource)
 export default {
   components: {
-    order: Order,
-    loading: false
+    order: Order
   },
   data () {
     return {
-      tasks: []
+      tasks: [],
+      loading: false
     }
   },
   created () {
