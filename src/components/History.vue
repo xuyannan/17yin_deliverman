@@ -4,7 +4,7 @@
       <i class="glyphicon glyphicon-repeat"></i> 加载中，请稍候
     </div>
     <div v-if="!loading && (tasks.length == 0 || !tasks)" class="yin-on-tasks">
-      <i class="glyphicon glyphicon-thumbs-up"></i> 暂无订单，休息一会吧
+      <i class="glyphicon glyphicon-thumbs-up"></i> 暂无历史订单
     </div>
     <order v-for="order in tasks" :order.sync="order"></order>
 </div>
