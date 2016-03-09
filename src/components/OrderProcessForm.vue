@@ -62,6 +62,11 @@ export default {
         function (res) {
           // TODO: 更科学的更新父组件中order的方式
           _this.$parent.$parent.order = res.data.data
+          // 删除此订单
+          if (res.data.data.workflow_state === 'finished') {
+            // console.log(_this.$parent.$parent.$parent)
+            _this.$parent.$parent.$parent.deleteOrder(res.data.data)
+          }
           _this.cancel()
         },
         function (res) {

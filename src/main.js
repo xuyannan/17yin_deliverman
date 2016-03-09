@@ -30,7 +30,7 @@ router.map({
   '/orders': {
     name: 'orders',
     component: Orders,
-    title: '订单列表'
+    title: '待送订单'
   },
   '/map/:merchant': {
     name: 'map',
@@ -40,17 +40,17 @@ router.map({
   '/tasks/list': {
     name: 'tasksList',
     component: TasksList,
-    title: '任务列表 - 列表'
+    title: '门店列表 - 列表'
   },
   '/tasks/map': {
     name: 'tasksMap',
     component: TasksMap,
-    title: '任务列表 - 地图'
+    title: '门店列表 - 地图'
   },
   '/history': {
     name: 'history',
     component: History,
-    title: '历史记录'
+    title: '配送历史'
   }
 })
 

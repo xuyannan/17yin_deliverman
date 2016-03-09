@@ -6,7 +6,7 @@
     <div v-if="!loading && (tasks.length == 0 || !tasks)" class="yin-on-tasks">
       <i class="glyphicon glyphicon-thumbs-up"></i> 暂无订单，休息一会吧
     </div>
-    <div v-for="task in tasks">
+    <div v-for="task in tasks" class="yin-task-wrapper">
       <div style="border-bottom: 1px solid #eee">
         <p class="yin-merchant-title">
           <span class="yin-merchant-name">{{task.merchant.name}}</span>
@@ -91,7 +91,7 @@ export default {
     },
     toggleOrderList: function (e) {
       $(e.target).parent().parent().parent().find('.yin-order-list').toggleClass('yin-order-list-closed')
-      e.target.innerText = e.target.innerText === '展开' ? '关闭' : '展开'
+      e.target.innerText = e.target.innerText === '展开' ? '收起' : '展开'
       // $('.yin-order-list').toggleClass('yin-order-list-closed')
     }
   }
@@ -103,7 +103,18 @@ export default {
 .yin-merchant-title .yin-merchant-name {font-weight: bold; font-size: 1.4em;}
 .yin-merchant-payment {font-size: 1.4em; color: #1b809e;}
 .yin-on-tasks {font-size: 1.2em; color: #ccc; text-align: center; margin-top: 20px;}
-.yin-order-list-closed {height: 0; overflow: hidden;}
-.yin-order-list .yin-order:first-child {margin-top: 0}
+.yin-order-list-closed {
+  height: 0; overflow: hidden;
+  -webkit-transition: all 1s ease-in;
+  -moz-transition: all 1s ease-in;
+  -o-transition: all 1s ease-in;
+  transition: all 1s ease-in;
+}
+.yin-order-list {
+  -webkit-transition: all 1s ease-in;
+  -moz-transition: all 1s ease-in;
+  -o-transition: all 1s ease-in;
+  transition: all 1s ease-in;
+}
 /*.yin-order-list-open {height: auto}*/
 </style>

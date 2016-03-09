@@ -13,13 +13,13 @@
         <a><i class="glyphicon glyphicon-user"></i> {{currentUser.name}}</span></a>
       </li>
       <li>
-        <a v-link="{name: 'orders'}"><i class="glyphicon glyphicon-list"></i> 订单</a>
+        <a v-link="{name: 'orders'}"><i class="glyphicon glyphicon-list"></i> 待送订单</a>
       </li>
       <li>
-        <a v-link="{name: 'tasksList'}"><i class="glyphicon glyphicon-certificate"></i> 门店</a>
+        <a v-link="{name: 'history'}"><i class="glyphicon glyphicon-calendar"></i> 配送历史</a>
       </li>
       <li>
-        <a v-link="{name: 'history'}"><i class="glyphicon glyphicon-calendar"></i> 历史</a>
+        <a v-link="{name: 'tasksList'}"><i class="glyphicon glyphicon-certificate"></i> 门店列表</a>
       </li>
       <li>
         <a @click="logout()"><i class="glyphicon glyphicon-log-out"></i> 退出</a>
