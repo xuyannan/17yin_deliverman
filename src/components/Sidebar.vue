@@ -16,6 +16,9 @@
         <a v-link="{name: 'orders'}"><i class="glyphicon glyphicon-list"></i> 待送订单</a>
       </li>
       <li>
+        <a v-link="{name: 'balance', params: {date: today}}"><i class="glyphicon glyphicon-jpy"></i> 对账</a>
+      </li>
+      <li>
         <a v-link="{name: 'history'}"><i class="glyphicon glyphicon-calendar"></i> 配送历史</a>
       </li>
       <li>
@@ -32,9 +35,15 @@
 <script>
   import cookie from '../lib/cookie'
   import jquery from 'jquery'
+  import moment from 'moment'
   // import tools from '../lib/tools'
   export default {
     props: ['currentUser'],
+    data: function () {
+      return {
+        today: moment().format('YYYY-MM-DD')
+      }
+    },
     created: function () {
       this.currentUser = this.$parent.currentUser
     },

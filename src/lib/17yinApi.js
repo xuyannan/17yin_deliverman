@@ -21,6 +21,11 @@ Yin17Api.prototype.getHistory = function (token) {
   return Vue.http.get(this.apiRootUrl + 'deliveryman/orders/history')
 }
 
+Yin17Api.prototype.getBalance = function (token, date) {
+  Vue.http.headers.common.Authorization = 'Basic ' + token
+  return Vue.http.get(this.apiRootUrl + `deliveryman/cashflow/balance?date=${date}`)
+}
+
 Yin17Api.prototype.processOrder = function (orderid, action, token, memo) {
   var url = `deliveryman/orders/${orderid}/procedure/${action}`
   Vue.http.headers.common.Authorization = 'Basic ' + token

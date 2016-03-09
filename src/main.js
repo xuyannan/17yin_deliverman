@@ -11,6 +11,7 @@ import Map from './components/Map'
 import TasksList from './components/TasksList'
 import TasksMap from './components/TasksMap'
 import History from './components/History'
+import Balance from './components/Balance'
 import jquery from 'jquery'
 Vue.use(Resource)
 Vue.use(VueRouter)
@@ -51,6 +52,11 @@ router.map({
     name: 'history',
     component: History,
     title: '配送历史'
+  },
+  '/balance/:date': {
+    name: 'balance',
+    component: Balance,
+    title: '对账'
   }
 })
 
@@ -58,7 +64,7 @@ router.redirect({
   '*': '/orders'
 })
 
-let auth_required_routes = ['/orders', '/account', '/history']
+let auth_required_routes = ['/orders', '/account', '/history', '/balance']
 
 router.beforeEach(function ({ to, next }) {
   let current_user = cookie.readCookie('user')
