@@ -7,18 +7,25 @@
       <i class="glyphicon glyphicon-thumbs-up"></i> 暂无订单，休息一会吧
     </div>
     <div v-for="task in tasks">
-      <p class="yin-merchant-title">
-        <span class="yin-merchant-name">{{task.merchant.name}}</span>
-        <a href="tel:{{task.merchant.mobile}}"><i class="glyphicon glyphicon-phone"></i>{{task.merchant.mobile}}</a>
-        <span class="yin-merchant-payment pull-right">{{task.payment}}</span>
-      </p>
-      <p>
-        <!-- <a v-link="{name: 'map', params: { merchant: task.merchant.id }}"><i class="glyphicon glyphicon-map-marker"></i> {{task.merchant.address}}</a> -->
-        <a @click='openMap(task.merchant)'>
-          <i v-if="task.merchant.coordinate" class="glyphicon glyphicon-map-marker"></i><i style="color: #d9534f !important" v-if="!task.merchant.coordinate" class="glyphicon glyphicon-question-sign"></i> {{task.merchant.address}}
-        </a>
-      </p>
-      <order v-if="order.workflow_state !== 'finished'" v-for="order in task.orders" :order.sync="order"></order>
+      <div style="border-bottom: 1px solid #eee">
+        <p class="yin-merchant-title">
+          <span class="yin-merchant-name">{{task.merchant.name}}</span>
+          <a href="tel:{{task.merchant.mobile}}"><i class="glyphicon glyphicon-phone"></i>{{task.merchant.mobile}}</a>
+          <span class="pull-right">
+            <span class="yin-merchant-payment">{{task.orders.length}}单, {{task.payment}}元</span>
+          </span>
+        </p>
+        <p>
+          <!-- <a v-link="{name: 'map', params: { merchant: task.merchant.id }}"><i class="glyphicon glyphicon-map-marker"></i> {{task.merchant.address}}</a> -->
+          <a @click='openMap(task.merchant)'>
+            <i v-if="task.merchant.coordinate" class="glyphicon glyphicon-map-marker"></i><i style="color: #d9534f !important" v-if="!task.merchant.coordinate" class="glyphicon glyphicon-question-sign"></i> {{task.merchant.address}}
+          </a>
+          <button class="pull-right btn btn-xs btn-info" @click="toggleOrderList($event)">展开</button>
+        </p>
+    </div>
+      <div class="yin-order-list yin-order-list-closed">
+        <order v-if="order.workflow_state !== 'finished'" v-for="order in task.orders" :order.sync="order"></order>
+      </div>
     </div>
 
   </div>
@@ -33,6 +40,7 @@ import cookie from '../lib/cookie'
 import Vue from 'vue'
 import resource from 'vue-resource'
 var store = require('../store')
+var $ = require('jquery')
 Vue.use(resource)
 export default {
   components: {
@@ -80,6 +88,11 @@ export default {
     },
     deleteOrder: function (order) {
       store.dispatch('DELET_ORDER', order)
+    },
+    toggleOrderList: function (e) {
+      $(e.target).parent().parent().parent().find('.yin-order-list').toggleClass('yin-order-list-closed')
+      e.target.innerText = e.target.innerText === '展开' ? '关闭' : '展开'
+      // $('.yin-order-list').toggleClass('yin-order-list-closed')
     }
   }
 }
@@ -90,4 +103,7 @@ export default {
 .yin-merchant-title .yin-merchant-name {font-weight: bold; font-size: 1.4em;}
 .yin-merchant-payment {font-size: 1.4em; color: #1b809e;}
 .yin-on-tasks {font-size: 1.2em; color: #ccc; text-align: center; margin-top: 20px;}
+.yin-order-list-closed {height: 0; overflow: hidden;}
+.yin-order-list .yin-order:first-child {margin-top: 0}
+/*.yin-order-list-open {height: auto}*/
 </style>
