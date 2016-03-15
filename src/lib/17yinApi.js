@@ -18,7 +18,7 @@ Yin17Api.prototype.getTasks = function (token) {
 
 Yin17Api.prototype.getHistory = function (token) {
   Vue.http.headers.common.Authorization = 'Basic ' + token
-  return Vue.http.get(this.apiRootUrl + 'deliveryman/orders/history')
+  return Vue.http.get(this.apiRootUrl + 'deliveryman/orders/history?per=10000')
 }
 
 Yin17Api.prototype.getBalance = function (token, date) {
