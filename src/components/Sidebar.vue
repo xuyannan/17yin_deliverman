@@ -36,6 +36,7 @@
   import cookie from '../lib/cookie'
   import jquery from 'jquery'
   import moment from 'moment'
+  var store = require('../store')
   // import tools from '../lib/tools'
   export default {
     props: ['currentUser'],
@@ -66,6 +67,7 @@
           cookie.eraseCookie('user')
           cookie.eraseCookie('token')
           this.$dispatch('user-logout')
+          store.dispatch('CLEAR')
           this.currentUser = undefined
         }
       }

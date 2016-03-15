@@ -54,9 +54,6 @@ export default {
     }
   },
   computed: {
-    tasks () {
-      return store.state.tasks
-    },
     totalPayment () {
 
     }
@@ -68,7 +65,7 @@ export default {
     api.getTasks(token).then(
       function (res) {
         _this.summary = res.data.data.summary
-        // _this.tasks = res.data.data.
+        _this.tasks = res.data.data.tasks
         store.state.tasks = res.data.data.tasks
         _this.loading = false
       },

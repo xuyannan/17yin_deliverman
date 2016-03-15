@@ -34,6 +34,10 @@ const mutations = {
       task.payment = payment
       return task.orders.length > 0
     })
+  },
+  'CLEAR' (state) {
+    state.currentMerchant = {}
+    state.tasks = []
   }
 }
 
