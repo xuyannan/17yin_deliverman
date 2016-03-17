@@ -58,9 +58,12 @@ export default {
     submitForm: function (orderid, action, extra) {
       var _this = this
       let token = cookie.readCookie('token')
+      _this.$parent.$parent.processing = true
+
       api.processOrder(orderid, action, token, extra).then(
         function (res) {
           // TODO: 更科学的更新父组件中order的方式
+          _this.$parent.$parent.processing = false
           _this.$parent.$parent.order = res.data.data
           // 删除此订单
           if (res.data.data.workflow_state === 'finished') {
@@ -71,6 +74,7 @@ export default {
         },
         function (res) {
           console.log(res)
+          _this.$parent.$parent.processing = false
         }
       )
     },

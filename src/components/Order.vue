@@ -27,8 +27,8 @@
     <div class="col-md-12 col-xs-12 nopadding" style="text-align: right; margin-bottom: 8px;">
       <button v-if="order.workflow_state =='ready_to_ship' || order.workflow_state =='delay_to_ship'" class="btn btn-primary" type="button" @click="processOrder(order.id, 'ship')"><i class="glyphicon glyphicon-send"></i> 配送中</button>
       <button v-if="order.workflow_state =='ready_to_ship' || order.workflow_state =='delay_to_ship'" class="btn btn-danger" type="button" @click="openModal('not_arrived')"><i class="glyphicon glyphicon-alert"></i> 未能接货</button>
-      <button v-if="order.workflow_state =='shipping'" class="btn btn-success" type="button" @click="processOrder(order.id, 'finish')"><i class="glyphicon glyphicon-ok"></i> 配送完成</button>
-      <button v-if="order.workflow_state =='shipping'" class="btn btn-warning" type="button" @click="openModal('finish-with-exception')"><i class="glyphicon glyphicon-exclamation-sign"></i> 配送异常</button>
+      <button :disabled="processing" v-if="order.workflow_state =='shipping'" class="btn btn-success" type="button" @click="processOrder(order.id, 'finish')"><i class="glyphicon glyphicon-ok"></i> 配送完成</button>
+      <button :disabled="processing" v-if="order.workflow_state =='shipping'" class="btn btn-warning" type="button" @click="openModal('finish-with-exception')"><i class="glyphicon glyphicon-exclamation-sign"></i> 配送异常</button>
     </div>
   </div>
   <div v-if="order.trace_logs.length > 0" class="row nomargin">
@@ -69,13 +69,11 @@ export default {
     accordion: accordion,
     panel: panel
   },
-  // data: function () {
-  //   return {
-  //     showModal: false,
-  //     currentOrder: undefined,
-  //     optType: undefined
-  //   }
-  // },
+  data: function () {
+    return {
+      processing: false
+    }
+  },
   created: function () {
     this.showModal = false
   },
@@ -103,15 +101,18 @@ export default {
       }, function () {
         let token = cookie.readCookie('token')
         // _this.$parent.deleteOrder(_this.order)
-        // console.log(token, api)
+        _this.processing = true
+
         api.processOrder(id, action, token).then(function (res) {
           _this.order = res.data.data
           // 完成订单从列表中删除
           if (_this.order.workflow_state === 'finished') {
             _this.$parent.deleteOrder(_this.order)
           }
+          _this.processing = false
         }, function (res) {
           console.log(res)
+          _this.processing = false
         })
       })
     },
