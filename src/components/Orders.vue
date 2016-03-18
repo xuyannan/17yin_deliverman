@@ -85,6 +85,7 @@ export default {
     },
     deleteOrder: function (order) {
       store.dispatch('DELET_ORDER', order)
+      this.tasks = store.state.tasks
     },
     toggleOrderList: function (e) {
       $(e.target).parent().parent().parent().find('.yin-order-list').toggleClass('yin-order-list-closed')
