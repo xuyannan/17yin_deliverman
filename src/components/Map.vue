@@ -1,6 +1,6 @@
 <template>
   <div class="mapContainer">
-    <div class="container mapHeader">
+    <div class="container mapHeader" v-if="remarkable">
       <h5>{{merchant.name}}</h5>
       <p>{{merchant.address}}</p>
       <div class="buttonsContainer">
@@ -27,6 +27,7 @@ var YinApi = require('../lib/17yinApi')
 var Config = require('../config.js')
 var api = new YinApi(Config.API_ROOT)
 var cookie = require('../lib/cookie')
+var jquery = require('jquery')
 
 export default {
   data: function () {
@@ -41,7 +42,20 @@ export default {
   },
   computed: {
     merchant () {
+      // 支持url中的地址信息，提供给app中的webView使用
+      if (typeof store.state.currentMerchant.name === 'undefined') {
+        alert('hello')
+        store.dispatch('SET_CURRENT_MERCHANT', {
+          coordinate: {lng: this.$route.query.lng, lat: this.$route.query.lat},
+          name: this.$route.query.name,
+          address: '1111'
+        })
+      }
+      console.log(store.state.currentMerchant)
       return store.state.currentMerchant
+    },
+    remarkable () {
+      return typeof store.state.currentMerchant.name !== 'undefined'
     }
   },
   methods: {
@@ -110,6 +124,11 @@ export default {
   },
   created: function () {
     let _this = this
+    console.log(this.remarkable)
+    if (!this.remarkable) {
+      jquery('#sidebar-wrapper').remove()
+      jquery('#wrapper').css({position: 'fixed'})
+    }
     let script = document.createElement('script')
     script.type = 'text/javascript'
     script.src = 'http://api.map.baidu.com/api?v=2.0&ak=jscginsPhRMiZeZUQwIkW6WD&callback=initMap'
