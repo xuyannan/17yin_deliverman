@@ -9,7 +9,7 @@
     <div v-for="task in tasks" class="yin-task-wrapper">
       <div style="border-bottom: 1px solid #eee">
         <p class="yin-merchant-title">
-          <span class="yin-merchant-name">{{task.merchant.name}}</span>
+          <span class="yin-merchant-name"><span style="color:#22a1c4">{{task.merchant.fake_name}}</span>-{{task.merchant.name}}</span>
           <a href="tel:{{task.merchant.mobile}}"><i class="glyphicon glyphicon-phone"></i>{{task.merchant.mobile}}</a>
           <span class="pull-right">
             <span class="yin-merchant-payment">{{task.orders.length}}单, {{task.payment}}元</span>
